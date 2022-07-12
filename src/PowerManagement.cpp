@@ -46,7 +46,7 @@ void PowerManagement::update(void){
 	} else chargingStatus = ChargingStatus::Unknown;
 
 	} else if (vBusSense.mV <= VBUS_MIN-1) {
-¡	chargingStatus = ChargingStatus::NotCharging;
+	chargingStatus = ChargingStatus::NotCharging;
 	lastChargingStatus = chargingStatus;
 	if (vBatSense.mV >= VBAT_MIN){
 		powerStatus = PowerStatus::BatteryPowered;
