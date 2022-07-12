@@ -1,0 +1,25 @@
+{
+  "name":"PowerManagement",
+  "version": "0.0.0",
+  "description":"Arduino-ESP32 library",
+  "keywords":"esp32, battery, charger, power management",
+  "authors": 
+  [
+    {
+      "name": "Pablo Clemente",
+      "maintainer": true,
+      "url":   "https://github.com/paclema"
+    }
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/paclema/PowerManagement"
+  },
+  "frameworks": "arduino",
+  "platforms": [
+    "atmelavr",
+    "espressif32"
+    ],
+  "examples": "examples/*/*/*.ino",
+}
