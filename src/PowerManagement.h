@@ -1,6 +1,9 @@
 #ifndef PowerManagement_H
 #define PowerManagement_H
 #ifdef ESP32
+#ifndef ARDUINO_IOTPOSTBOX_V1
+	#pragma message ("PowerManagement class is configured only for ARDUINO_IOTPOSTBOX_V1 by now. You must check PowerManagement.h class to change the preprocessor definitions accordingly")
+#endif
 #else
 	#pragma message ("PowerManagement class only supports ESP32 hardware")
 #endif
