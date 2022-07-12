@@ -1,7 +1,7 @@
 {
   "name":"PowerManagement",
   "version": "0.0.0",
-  "description":"Arduino-ESP32 library",
+  "description":"Arduino-ESP32 library to handle power status based on MCP73831/2, TP4054 and TP4065 battery charger ICs",
   "keywords":"esp32, battery, charger, power management",
   "authors": 
   [
