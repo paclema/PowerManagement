@@ -11,3 +11,4 @@ v0.0.0 (2025-08-16)
 * Added basic example
 * Add github release workflow and scripts
 * Fix compare_versions.sh script to handle v0.0.0 version
+* Add LICENSE file and remove 'data' folder from build-arduino-package.sh zip
