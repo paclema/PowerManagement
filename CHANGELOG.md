@@ -10,3 +10,4 @@ HEAD
 * Fixed typo
 * Added basic example
 * Add github release workflow and scripts
+* Fix compare_versions.sh script to handle v0.0.0 version
