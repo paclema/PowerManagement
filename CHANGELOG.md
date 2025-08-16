@@ -1,6 +1,11 @@
 PowerManagement: Changelog
 ==========================
 
+HEAD
+----
+
+* Add missing badges for release build, PlatformIO registry, and donation link to README
+
 v0.0.0 (2025-08-16)
 ------
 
