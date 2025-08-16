@@ -1,8 +1,8 @@
 PowerManagement: Changelog
 ==========================
 
-HEAD
-----
+v0.0.0 (2025-08-16)
+------
 
 * Added PowerManagement and ADCSense classes and published first lib version v0.0.0
 * Updated lib description
