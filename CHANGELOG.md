@@ -1,6 +1,11 @@
 PowerManagement: Changelog
 ==========================
 
+HEAD
+----
+
+* Set ADC_WIDTH_BIT_13 for s2 and s3 targets and ADC_WIDTH_BIT_12 for other esp32 SoCs
+
 v0.0.1 (2025-08-16)
 ------
 

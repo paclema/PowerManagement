@@ -15,8 +15,14 @@ ADCSense::~ADCSense(void) {
 }
 
 void ADCSense::setup(adc_atten_t atten){
-	adc1_config_width(ADC_WIDTH_BIT_13);
-
+    adc_bits_width_t adc_width;
+    #if defined(CONFIG_IDF_TARGET_ESP32S2) || defined(CONFIG_IDF_TARGET_ESP32S3)
+        adc_width = ADC_WIDTH_BIT_13;
+		#else
+        adc_width = ADC_WIDTH_BIT_12;
+	#endif
+	adc1_config_width(adc_width);
+		
 	esp_err_t ret;
 	ret = esp_adc_cal_check_efuse(ESP_ADC_CAL_VAL_EFUSE_TP);
 	if (ret == ESP_ERR_NOT_SUPPORTED) {
@@ -40,10 +46,15 @@ void ADCSense::setup(adc_atten_t atten){
 		*/
 		Serial.printf("---- ADC: atten: %d channel: %d coeff: %1.3f\n", atten, ADCchannel, voltageDividerCoeff);
 
-		adc1_config_channel_atten(ADCchannel, atten);
-		esp_adc_cal_value_t val_type = esp_adc_cal_characterize(ADC_UNIT_1,atten, ADC_WIDTH_BIT_13, 0, adc_chars);
-		
-	}
+        adc1_config_channel_atten(ADCchannel, atten);
+        esp_adc_cal_value_t val_type = esp_adc_cal_characterize(
+            ADC_UNIT_1,
+            atten,
+            adc_width,
+            0,
+            adc_chars
+        );
+    }
 
 	for (int i = 0; i < ADC_SAMPLES; i++) readings[i] = 0;
 	for (int i = 0; i < ADC_SAMPLES; i++) updatedADC();
