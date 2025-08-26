@@ -1,8 +1,8 @@
 PowerManagement: Changelog
 ==========================
 
-HEAD
-----
+v0.2.0 (2025-08-26)
+------
 
 * Implement addChargingStatusCallback and include list of callbacks to be called on isrCharging interrupt. Change some members to private
 
