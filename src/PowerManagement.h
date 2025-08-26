@@ -41,6 +41,10 @@
 
 #define ISR_FLAG  ARDUINO_ISR_ATTR
 
+#ifndef MAX_CHARGING_CALLBACKS
+#define MAX_CHARGING_CALLBACKS  4
+#endif
+
 
 
 enum class PowerStatus {
@@ -64,38 +68,53 @@ public:
 
 	ADCSense vBatSense;
 	ADCSense vBusSense;
-	volatile int vBatStat = 0;	// MCP73831/2 Charging = 0, Not charging = 1
-
-
-	PowerStatus powerStatus = PowerStatus::Unknown;
-	PowerStatus lastPowerStatus = PowerStatus::Unknown;
-	ChargingStatus chargingStatus = ChargingStatus::Unknown;
-	ChargingStatus lastChargingStatus = ChargingStatus::Unknown;
-	
-
 	
 	PowerManagement(void);
 	~PowerManagement(void);
 
 	void setup(void);
 	void update(void);
-
-	void ISR_FLAG isrCharging(){
-		vBatStat = digitalRead(VBAT_STAT_SENSE_PIN);
-
-		// if (pinState == HIGH) chargingStatus = ChargingStatus::NotCharging;
-		// else if (pinState == LOW) chargingStatus = ChargingStatus::Charging;
-		// else chargingStatus = ChargingStatus::Unknown;
-
-		Serial.printf(" -- VBAT_STAT_SENSE_PIN changed to: %s --> ChargingStatus: %d\n",  vBatStat ? "true": "false", chargingStatus);
-	};
-
+	
+	
 	PowerStatus getPowerStatus() { return powerStatus; }
 	PowerStatus getLastPowerStatus() { return lastPowerStatus; }
 	ChargingStatus getChargingStatus() { return chargingStatus; }
 	ChargingStatus getLastChargingStatus() { return lastChargingStatus; }
 	int getVBatStat() { return vBatStat; }
+	
+	bool addChargingStatusCallback(ChargingStatusCallback cb) {
+		if (chargingCallbackCount < MAX_CHARGING_CALLBACKS) {
+			chargingStatusCallbacks[chargingCallbackCount++] = cb;
+			return true;
+		}
+		return false;
+	}
 
+private:
+	volatile int vBatStat = 0;	// MCP73831/2 Charging = 0, Not charging = 1
+
+	PowerStatus powerStatus = PowerStatus::Unknown;
+	PowerStatus lastPowerStatus = PowerStatus::Unknown;
+	ChargingStatus chargingStatus = ChargingStatus::Unknown;
+	ChargingStatus lastChargingStatus = ChargingStatus::Unknown;
+
+	typedef void (*ChargingStatusCallback)();
+	ChargingStatusCallback chargingStatusCallbacks[MAX_CHARGING_CALLBACKS] = {nullptr};
+	int chargingCallbackCount = 0;
+	
+	void ISR_FLAG isrCharging() {
+		vBatStat = digitalRead(VBAT_STAT_SENSE_PIN);
+		
+		// if (pinState == HIGH) chargingStatus = ChargingStatus::NotCharging;
+		// else if (pinState == LOW) chargingStatus = ChargingStatus::Charging;
+		// else chargingStatus = ChargingStatus::Unknown;
+
+		// Call all registered callbacks (do NOT call UI code here, just notify)
+		for (int i = 0; i < chargingCallbackCount; ++i) {
+			if (chargingStatusCallbacks[i]) chargingStatusCallbacks[i]();
+		}
+		Serial.printf(" -- VBAT_STAT_SENSE_PIN changed to: %s --> ChargingStatus: %d\n",  vBatStat ? "true": "false", chargingStatus);
+	}
 
 };
 
