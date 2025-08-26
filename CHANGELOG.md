@@ -5,6 +5,7 @@ v0.2.0 (2025-08-26)
 ------
 
 * Implement addChargingStatusCallback and include list of callbacks to be called on isrCharging interrupt. Change some members to private
+* Fix private ChargingStatusCallback definition to public
 
 v0.1.0 (2025-08-16)
 ------

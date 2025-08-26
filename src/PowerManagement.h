@@ -82,6 +82,7 @@ public:
 	ChargingStatus getLastChargingStatus() { return lastChargingStatus; }
 	int getVBatStat() { return vBatStat; }
 	
+	typedef void (*ChargingStatusCallback)();
 	bool addChargingStatusCallback(ChargingStatusCallback cb) {
 		if (chargingCallbackCount < MAX_CHARGING_CALLBACKS) {
 			chargingStatusCallbacks[chargingCallbackCount++] = cb;
@@ -98,7 +99,6 @@ private:
 	ChargingStatus chargingStatus = ChargingStatus::Unknown;
 	ChargingStatus lastChargingStatus = ChargingStatus::Unknown;
 
-	typedef void (*ChargingStatusCallback)();
 	ChargingStatusCallback chargingStatusCallbacks[MAX_CHARGING_CALLBACKS] = {nullptr};
 	int chargingCallbackCount = 0;
 	
@@ -109,7 +109,6 @@ private:
 		// else if (pinState == LOW) chargingStatus = ChargingStatus::Charging;
 		// else chargingStatus = ChargingStatus::Unknown;
 
-		// Call all registered callbacks (do NOT call UI code here, just notify)
 		for (int i = 0; i < chargingCallbackCount; ++i) {
 			if (chargingStatusCallbacks[i]) chargingStatusCallbacks[i]();
 		}
