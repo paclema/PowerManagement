@@ -113,7 +113,6 @@ private:
 		for (int i = 0; i < chargingCallbackCount; ++i) {
 			if (chargingStatusCallbacks[i]) chargingStatusCallbacks[i]();
 		}
-		Serial.printf(" -- VBAT_STAT_SENSE_PIN changed to: %s --> ChargingStatus: %d\n",  vBatStat ? "true": "false", chargingStatus);
 		ESP_LOGI("PowerManagement", " -- VBAT_STAT_SENSE_PIN changed to: %s --> ChargingStatus: %d",  vBatStat ? "true": "false", chargingStatus);
 	}
 

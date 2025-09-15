@@ -1,6 +1,11 @@
 PowerManagement: Changelog
 ==========================
 
+HEAD
+----
+
+* Remove duplicated debug print
+
 v0.3.0 (2025-09-15)
 ------
 
