@@ -4,6 +4,8 @@
 #pragma once
 #include <Arduino.h>
 
+#include <esp_log.h>
+
 #ifdef ESP32
 #include "driver/adc.h"
 #include "esp_adc_cal.h"

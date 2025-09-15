@@ -1,6 +1,11 @@
 PowerManagement: Changelog
 ==========================
 
+HEAD
+----
+
+* Replace Serial logging with ESP_LOG in ADCSense and PowerManagement classes
+
 v0.2.0 (2025-08-26)
 ------
 
